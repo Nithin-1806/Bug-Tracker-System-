@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bug Tracker Dashboard</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: rgb(250, 253, 250);
+            margin: 0;
+            padding: 20px;
+            text-align: center;
+        }
+        h1 {
+            color: #343a40;
+            margin-bottom: 20px;
+        }
+        a {
+            display: inline-block;
+            background-color: rgb(22, 24, 25);
+            color: white;
+            text-decoration: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            font-size: 16px;
+            margin-bottom: 20px;
+            transition: 0.3s;
+        }
+        a:hover {
+            background-color: rgb(245, 247, 249);
+            color: black;
+        }
+        ul {
+            list-style-type: none;
+            padding: 0;
+            margin: 20px auto;
+            width: 50%;
+        }
+        li {
+            background: white;
+            padding: 15px;
+            margin-bottom: 10px;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            font-size: 18px;
+        }
+        li a {
+            font-weight: bold;
+            color: #007bff;
+            text-decoration: none;
+        }
+        li a:hover {
+            text-decoration: underline;
+        }
+        .status {
+            font-weight: bold;
+        }
+        .bug-actions {
+            margin-top: 10px;
+        }
+        .bug-actions a, .bug-actions button {
+            margin-right: 10px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Bug Tracker Dashboard</h1>
+    <a href="{{ url_for('add_bug') }}">Report a Bug</a>
+    <ul>
+        {% for bug in bugs %}
+            <li>
+                <a href="{{ url_for('view_bug', bug_id=bug[0]) }}">{{ bug[1] }}</a>
+                <span class="status" style="color: {% if bug[3] == 'Open' %}red{% elif bug[3] == 'In Progress' %}orange{% else %}green{% endif %};">
+                    Status: {{ bug[3] }}
+                </span>
+                <div class="bug-actions">
+                    <a href="{{ url_for('edit_bug', bug_id=bug[0]) }}">Edit</a>
+                    <form action="{{ url_for('delete_bug', bug_id=bug[0]) }}" method="POST" style="display:inline;">
+                        <button type="submit">Delete</button>
+                    </form>
+                </div>
+            </li>
+        {% endfor %}
+
+        <a href="{{ url_for('dashboard') }}">Back to Dashboard</a>
+    </ul>
+</body>
+</html>

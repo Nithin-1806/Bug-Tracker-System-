@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Report a Bug</title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css') }}">
+
+</head>
+<body>
+    <h1>Report a New Bug</h1>
+    <form method="post">
+        <label>Title:</label>
+        <input type="text" name="title" required>
+        <label>Description:</label>
+        <textarea name="description" required></textarea>
+        <button type="submit">Submit</button>
+    </form>
+</body>
+</html>

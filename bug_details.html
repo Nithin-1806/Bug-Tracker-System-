@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Bug Details</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f8f9fa;
+            margin: 0;
+            padding: 20px;
+            text-align: center;
+        }
+
+        h1 {
+            color: #343a40;
+        }
+
+        .container {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            width: 50%;
+            margin: auto;
+            text-align: left;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 8px 15px;
+            margin: 5px;
+            border-radius: 5px;
+            font-size: 14px;
+            text-decoration: none;
+            color: white;
+            transition: 0.3s;
+            text-align: center;
+        }
+
+        .btn-update {
+            background-color: #007bff;
+        }
+
+        .btn-update:hover {
+            background-color: #0056b3;
+        }
+
+        .btn-delete {
+            background-color: #dc3545;
+        }
+
+        .btn-delete:hover {
+            background-color: #c82333;
+        }
+
+        form {
+            margin-top: 15px;
+        }
+
+        select {
+            padding: 5px;
+            font-size: 16px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Bug Details</h1>
+    <div class="container">
+        <p><strong>Title:</strong> {{ bug[1] }}</p>
+        <p><strong>Description:</strong> {{ bug[2] }}</p>
+        <p><strong>Status:</strong> {{ bug[3] }}</p>
+        <p><strong>Created At:</strong> {{ bug[4] }}</p>
+
+        <!-- Form to Update Bug Status -->
+        <form method="post" action="{{ url_for('update_bug_status', bug_id=bug[0]) }}">
+            <label>Update Status:</label>
+            <select name="status">
+                <option value="Open" {% if bug[3] == 'Open' %} selected {% endif %}>Open</option>
+                <option value="In Progress" {% if bug[3] == 'In Progress' %} selected {% endif %}>In Progress</option>
+                <option value="Resolved" {% if bug[3] == 'Resolved' %} selected {% endif %}>Resolved</option>
+            </select>
+            <button type="submit" class="btn btn-update">Update</button>
+        </form>
+
+        <!-- Delete Bug -->
+        <form method="post" action="{{ url_for('delete_bug', bug_id=bug[0]) }}" onsubmit="return confirm('Are you sure you want to delete this bug?');">
+            <button type="submit" class="btn btn-delete">Delete</button>
+        </form>
+
+        <a href="{{ url_for('dashboard') }}">Back to Dashboard</a>
+    </div>
+</body>
+</html>
